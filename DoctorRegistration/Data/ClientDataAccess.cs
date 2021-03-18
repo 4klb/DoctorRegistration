@@ -35,14 +35,14 @@ namespace DoctorRegistration.Data
             }
         }
 
-        public void SetVisitTime(string time)
+        public void SetVisitTime(string time) 
         {
             string updateSqlScript = $"UPDATE Schedule SET IsAvailable = 'false' WHERE VisitTime = '{time}'";
 
 
             using (var command = factory.CreateCommand())
             {
-                command.CommandText = updateSqlScript;
+                command.CommandText = updateSqlScript; 
                 command.Connection = connection;
 
                 command.ExecuteNonQuery();
@@ -51,7 +51,7 @@ namespace DoctorRegistration.Data
 
         public void Insert(Client client)
         {
-            string insertSqlScript = "INSERT INTO Client VALUES (@Id, @FullName, @Phone, @Email)";
+            string insertSqlScript = "INSERT INTO Client VALUES (@Id, @FullName, @Phone, @Address)";
 
             using (var transaction = connection.BeginTransaction())
             {

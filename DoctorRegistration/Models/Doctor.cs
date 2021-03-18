@@ -7,7 +7,7 @@ namespace DoctorRegistration.Models
     {
         public string FullName { get; set; }
 
-        public ICollection<MedicalPractice> MedicalPractice;
+        public ICollection<MedicalPractice> MedicalPractices;
         public DateTime StartWork { get; set; }
         public DateTime EndWork { get; set; }
         public Guid ScheduleId { get; set; }

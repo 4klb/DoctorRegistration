@@ -2,6 +2,8 @@
 using DoctorRegistration.Models;
 using DoctorRegistration.Services;
 using DoctorRegistration.UI;
+using System;
+using System.Collections.Generic;
 
 namespace DoctorRegistration
 {
@@ -21,11 +23,8 @@ namespace DoctorRegistration
                 Address = "г.Нур-Султан, ул.Пушкина дом 2, кв. 80"
             };
 
-            visit.NewVisitor(client);
-            visit.AvailableTime();
+            //visit.NewVisitor(client);
             visit.SetTime();
-
-
         }
 
         private static void InitConfiguration()
