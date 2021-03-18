@@ -1,9 +1,6 @@
 ﻿using DoctorRegistration.Data;
 using DoctorRegistration.Models;
 using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 
 namespace DoctorRegistration.UI
 {

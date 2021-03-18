@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DoctorRegistration.Models
+﻿namespace DoctorRegistration.Models
 {
     public class Client : Entity
     {

@@ -2,15 +2,56 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Text;
 
 namespace DoctorRegistration.Data
 {
     public class ClientDataAccess : DbDataAccess<Client>
     {
+        public ICollection<Schedule> GetAvailableTime()
+        {
+            string selectSqlScript = "SELECT * FROM Schedule WHERE IsAvailable = 'true'";
+
+            var schedule = new List<Schedule>();
+
+            using (var command = factory.CreateCommand())
+            {
+                command.CommandText = selectSqlScript;
+                command.Connection = connection;
+
+                using (var dataReader = command.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        schedule.Add(new Schedule
+                        {
+                            Id = Guid.Parse(dataReader["Id"].ToString()),
+                            VisitTime = DateTime.Parse(dataReader["VisitTime"].ToString()),
+                            IsAvailable = Convert.ToBoolean(dataReader["IsAvailable"].ToString())
+                        });
+                    }
+                }
+
+                return schedule;
+            }
+        }
+
+        public void SetVisitTime(string time)
+        {
+            string updateSqlScript = $"UPDATE Schedule SET IsAvailable = 'false' WHERE VisitTime = '{time}'";
+
+
+            using (var command = factory.CreateCommand())
+            {
+                command.CommandText = updateSqlScript;
+                command.Connection = connection;
+
+                command.ExecuteNonQuery();
+            }
+        }
+
         public void Insert(Client client)
         {
-            string insertSqlScript = "insert into Users values (@Id,@FullName, @Phone,@Email)";
+            string insertSqlScript = "INSERT INTO Client VALUES (@Id, @FullName, @Phone, @Email)";
 
             using (var transaction = connection.BeginTransaction())
             {
@@ -55,48 +96,6 @@ namespace DoctorRegistration.Data
                         transaction.Rollback();
                     }
                 }
-            }
-        }
-
-        public ICollection<Schedule> GetAvailableTime()
-        {
-            string selectSqlScript = "SELECT * FROM Schedule WHERE IsAvailable = 'true'";
-
-            var schedule = new List<Schedule>();
-
-            using (var command = factory.CreateCommand())
-            {
-                command.CommandText = selectSqlScript;
-                command.Connection = connection;
-
-                using (var dataReader = command.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        schedule.Add(new Schedule
-                        {
-                            Id = Guid.Parse(dataReader["Id"].ToString()),
-                            VisitTime = DateTime.Parse(dataReader["VisitTime"].ToString()),
-                            IsAvailable = Convert.ToBoolean(dataReader["IsAvailable"].ToString())
-                        });
-                    }
-                }
-
-                return schedule;
-            }
-        }
-
-        public void SetVisitTime(string time)
-        {
-            string updateSqlScript = $"UPDATE Schedule SET IsAvailable = 'false' WHERE VisitTime = '{time}'";
-
-
-            using (var command = factory.CreateCommand())
-            {
-                command.CommandText = updateSqlScript;
-                command.Connection = connection;
-
-                command.ExecuteNonQuery();
             }
         }
     }

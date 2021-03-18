@@ -2,9 +2,6 @@
 using DoctorRegistration.Models;
 using DoctorRegistration.Services;
 using DoctorRegistration.UI;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
 
 namespace DoctorRegistration
 {
